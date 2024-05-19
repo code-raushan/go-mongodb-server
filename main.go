@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("hi")
+	fmt.Print("Creating an HTTP Server to handle requests")
 }
