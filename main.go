@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/code-raushan/go-mongodb-server/config"
@@ -23,4 +24,8 @@ func main() {
 	}
 
 	config.ConnectDB(uri)
+
+	if err:=http.ListenAndServe(":8888", nil); err != nil {
+		log.Fatalf("Error in the http server %v", err)
+	}
 }
