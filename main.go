@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/code-raushan/go-mongodb-server/config"
+	"github.com/code-raushan/go-mongodb-server/handlers"
 
 	"github.com/joho/godotenv"
 )
@@ -24,6 +25,8 @@ func main() {
 	}
 
 	config.ConnectDB(uri)
+
+	http.HandleFunc("/health", handlers.HealthHandler())
 
 	if err:=http.ListenAndServe(":8888", nil); err != nil {
 		log.Fatalf("Error in the http server %v", err)
