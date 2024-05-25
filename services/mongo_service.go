@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/code-raushan/go-mongodb-server/repositories"
 	"github.com/code-raushan/go-mongodb-server/types"
 )
 
@@ -8,17 +9,17 @@ type MongoServicer interface {
 	Fetch(filter types.FilterOptions) []types.FetchResponse
 }
 type MongoService struct {
-	client MongoServicer
+	repo *repositories.MongoRepo
 }
 
-func NewMongoService(client MongoServicer) *MongoService {
+func NewMongoService(repo *repositories.MongoRepo) *MongoService {
 	return &MongoService{
-		client: client,
+		repo: repo,
 	}
 }
 
 func (s *MongoService) FetchRecords(filter types.FilterOptions) *types.UserResponse {
-	res := s.client.Fetch(filter)
+	res := s.repo.Fetch(filter)
 
 	return &types.UserResponse{
 		Code: 0,

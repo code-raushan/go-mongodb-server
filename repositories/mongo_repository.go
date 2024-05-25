@@ -9,21 +9,21 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type mongoRepo struct {
+type MongoRepo struct {
 	client     *mongo.Client
 	collection *mongo.Collection
 }
 
-func NewMongoRepo(client *mongo.Client, dbName string, collectionName string) *mongoRepo {
+func NewMongoRepo(client *mongo.Client, dbName string, collectionName string) *MongoRepo {
 	collection := client.Database(dbName).Collection(collectionName)
 
-	return &mongoRepo{
+	return &MongoRepo{
 		client:     client,
 		collection: collection,
 	}
 }
 
-func (m *mongoRepo) Fetch(filter types.FilterOptions) []types.FetchResponse {
+func (m *MongoRepo) Fetch(filter types.FilterOptions) []types.FetchResponse {
 	ctx := context.Background()
 
 	pipeline := []bson.M{
