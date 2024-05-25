@@ -23,7 +23,7 @@ func NewMongoRepo(client *mongo.Client, dbName string, collectionName string) *M
 	}
 }
 
-func (m *MongoRepo) Fetch(filter types.FilterOptions) []types.FetchResponse {
+func (m *MongoRepo) Fetch(filter types.FilterOptions) ([]types.FetchResponse, error) {
 	ctx := context.Background()
 
 	pipeline := []bson.M{
@@ -66,7 +66,8 @@ func (m *MongoRepo) Fetch(filter types.FilterOptions) []types.FetchResponse {
 	var results []types.FetchResponse
 	if err := cur.All(ctx, &results); err != nil {
 		log.Fatalf("Error while storing data records into response: %v", err)
+		return nil, err
 	}
 
-	return results
+	return results, nil
 }

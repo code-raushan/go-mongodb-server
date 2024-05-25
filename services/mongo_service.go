@@ -19,11 +19,19 @@ func NewMongoService(repo *repositories.MongoRepo) *MongoService {
 }
 
 func (s *MongoService) FetchRecords(filter types.FilterOptions) *types.UserResponse {
-	res := s.repo.Fetch(filter)
+	res, err := s.repo.Fetch(filter)
+
+	if err != nil {
+		return &types.UserResponse{
+			Code: 1,
+			Msg: err.Error(),
+			Records: make([]types.FetchResponse, 0),
+		}
+	}
 
 	return &types.UserResponse{
 		Code: 0,
-		Msg: "successful",
+		Msg: "Success",
 		Records: res,
 	}
 }
