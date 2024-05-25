@@ -14,7 +14,7 @@ import (
 
 func main() {
 
-	if err:=godotenv.Load();  err != nil {
+	if err := godotenv.Load(); err != nil {
 		log.Fatalf("Error loading .env file")
 	}
 
@@ -28,7 +28,7 @@ func main() {
 
 	http.HandleFunc("/health", handlers.HealthHandler())
 
-	if err:=http.ListenAndServe(":8888", nil); err != nil {
+	if err := http.ListenAndServe(":8888", nil); err != nil {
 		log.Fatalf("Error in the http server %v", err)
 	}
 }
