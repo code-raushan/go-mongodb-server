@@ -8,6 +8,8 @@ import (
 
 	"github.com/code-raushan/go-mongodb-server/config"
 	"github.com/code-raushan/go-mongodb-server/handlers"
+	"github.com/code-raushan/go-mongodb-server/repositories"
+	"github.com/code-raushan/go-mongodb-server/services"
 
 	"github.com/joho/godotenv"
 )
@@ -24,7 +26,18 @@ func main() {
 		return
 	}
 
-	config.ConnectDB(uri)
+	dbClient := config.ConnectDB(uri)
+
+	const (
+		dbName   = "getircase-study"
+		collName = "records"
+	)
+
+	m := repositories.NewMongoRepo(dbClient, dbName, collName)
+
+	s := services.NewMongoService(m)
+
+	http.HandleFunc("/fetch", handlers.FetchRecordsHandler(s))
 
 	http.HandleFunc("/health", handlers.HealthHandler())
 

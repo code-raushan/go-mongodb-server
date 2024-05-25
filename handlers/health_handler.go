@@ -12,17 +12,18 @@ type HealthResponse struct {
 }
 
 func HealthHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r * http.Request){
+	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			log.Fatal("Method not allowed")
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
 		}
 		fmt.Println("/health route hit")
 		w.Header().Set("Content-Type", "application/json")
-		healthResponse := HealthResponse {
+		healthResponse := HealthResponse{
 			Health: "OK",
 		}
-		
+
 		json.NewEncoder(w).Encode(healthResponse)
 	}
 }
