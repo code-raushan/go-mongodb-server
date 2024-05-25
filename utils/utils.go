@@ -12,8 +12,6 @@ import (
 func ExtractFilters(query url.Values) (filters *types.FilterOptions, err error) {
 	filters = &types.FilterOptions{}
 
-	fmt.Printf("%v", query)
-
 	if minCountStr := query["minCount"]; minCountStr[0] != "" {
 		minCount, err := strconv.Atoi(minCountStr[0])
 		if err != nil {
@@ -45,8 +43,6 @@ func ExtractFilters(query url.Values) (filters *types.FilterOptions, err error) 
 		}
 		filters.EndDate = endDate
 	}
-
-	fmt.Printf("%v", filters)
 
 	return filters, nil
 }
