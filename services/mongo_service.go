@@ -18,7 +18,7 @@ func NewMongoService(repo *repositories.MongoRepo) *MongoService {
 	}
 }
 
-func (s *MongoService) FetchRecords(filter types.FilterOptions) *types.UserResponse {
+func (s *MongoService) FetchRecords(filter *types.FilterOptions) *types.UserResponse {
 	res, err := s.repo.Fetch(filter)
 
 	if err != nil {

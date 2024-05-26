@@ -9,9 +9,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type FetchData interface {
+	Fetch(types.FilterOptions) ([]types.FetchResponse, error)
+}
+
 type MongoRepo struct {
 	client     *mongo.Client
 	collection *mongo.Collection
+	FetchData
 }
 
 func NewMongoRepo(client *mongo.Client, dbName string, collectionName string) *MongoRepo {
@@ -23,7 +28,7 @@ func NewMongoRepo(client *mongo.Client, dbName string, collectionName string) *M
 	}
 }
 
-func (m *MongoRepo) Fetch(filter types.FilterOptions) ([]types.FetchResponse, error) {
+func (m *MongoRepo) Fetch(filter *types.FilterOptions) ([]types.FetchResponse, error) {
 	ctx := context.Background()
 
 	pipeline := []bson.M{

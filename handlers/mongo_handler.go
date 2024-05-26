@@ -22,7 +22,7 @@ func FetchRecordsHandler(s *services.MongoService) http.HandlerFunc {
 			log.Fatalf("Error while filtering the response %v ", err)
 		}
 
-		res := s.FetchRecords(*filters)
+		res := s.FetchRecords(filters)
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(res)
 	}
