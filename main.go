@@ -35,11 +35,15 @@ func main() {
 
 	m := repositories.NewMongoRepo(dbClient, dbName, collName)
 
-	s := services.NewMongoService(m)
+	mongoService := services.NewMongoService(m)
 
-	http.HandleFunc("/fetch", handlers.FetchRecordsHandler(s))
+	inMemoryService := services.NewInMemoryDB()
+
+	http.HandleFunc("/fetch", handlers.FetchRecordsHandler(mongoService))
 
 	http.HandleFunc("/health", handlers.HealthHandler())
+
+	http.HandleFunc("/in-memory", handlers.InMemoryDBHandler(inMemoryService))
 
 	if err := http.ListenAndServe(":8888", nil); err != nil {
 		log.Fatalf("Error in the http server %v", err)

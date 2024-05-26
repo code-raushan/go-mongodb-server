@@ -20,3 +20,8 @@ type UserResponse struct {
 	Msg     string          `json:"msg"`
 	Records []FetchResponse `json:"records"`
 }
+
+type MemoryDataStore struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
